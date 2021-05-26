@@ -1,0 +1,45 @@
+
+body{
+  margin:0;
+  line-height: 1.5em;
+  color:#222;
+  height: 100vh;
+  
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container{
+ border:1px solid blue;
+}
+
+.login{
+  text-align: center;
+}
+.login-form{
+  border:1px solid red;
+  width: 400px;
+  height: 100px;
+}
+.login-form > input[type=email],
+.login-form > input[type=password]{
+  display:block;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  width: 100%;
+}
+.login-form > input[type=email]:hover,
+.login-form > input[type=password]:hover,
+.login-form > input[type=email]:focus,
+.login-form > input[type=password]:focus{
+  border:1px solid #1db1f0;
+  box-shadow: 0 0 5px #0088cc;
+}
+
+.login-form > button{
+  cursor:pointer;
+}
+.signup{
+  visibility: hidden;
+}
