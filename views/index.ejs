@@ -2,25 +2,39 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title></title>
+    <title>COVID19 MAP</title>
     <link rel="stylesheet" href="/stylesheets/style_index.css" />
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src ="js/index.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="login">
-        <form action="POST" class="login-form">
-          <input type="email" name="email" id="email" />
-          <input type="password" name="password" id="password" />
-          <button type="submit" class="btn-send">login</button>
-          <button class="btn-signup">signup</button>
+        <div class = "error-message">
+          <% if(locals.message) {%>
+            <%= message %>
+            <% }%>
+      </div>
+        <form action="login" class="form-style" method="POST">
+          <input type="email" name="email" id="email" placeholder="Email"/>
+          <input type="password" name="password" id="password" placeholder="password" />
+          <input type="submit" class="btn-send" value="로그인"/>
+          <input type = "button" class="btn-signup" value = "회원가입">
         </form>
       </div>
-      <div class="signup">
-        <form action="POST" class="login-form">
-          <input type="email" name="email" id="email" />
-          <input type="password" name="password" id="password" />
-          <button type="submit" class="btn-send"></button>
-          <button class="btn-signin">signin</button>
+      <div class="signup unvisible">
+        <div class = "error-message">
+          <% if(locals.message) {%>
+            <%= message %>
+            <% }%>
+      </div>
+        <form action="register" class="form-style" method="POST">
+          <input type="email" name="email" id="email" placeholder="Email" />
+          <input type="password" name="password" id="password" placeholder="password" />
+          <input type="text" name="age" id="age" placeholder="Age" />
+          <input type="text" name = "category" id = "category" value="signup" style="display: none;">
+          <input type="submit" class="btn-send" value = "회원가입"/>
+          <input type = "button" class="btn-signin" value = "로그인으로">
         </form>
       </div>
     </div>

@@ -4,42 +4,106 @@ body{
   line-height: 1.5em;
   color:#222;
   height: 100vh;
-  
-  display:flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #eee;
 }
 
 .container{
- border:1px solid blue;
 }
-
-.login{
+.container > div{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  opacity: 1;
+}
+.unvisible{
+  visibility: hidden;
+}
+.error-message{
+  position:absolute;
+  left:50%;
+  top:20%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 12px;
+  width: 100%;
   text-align: center;
 }
-.login-form{
-  border:1px solid red;
+
+ /* @@@@@@@@@@@@@@ form css @@@@@@@@@@@@ */
+
+.login{
   width: 400px;
-  height: 100px;
-}
-.login-form > input[type=email],
-.login-form > input[type=password]{
-  display:block;
-  border: 1px solid #eee;
+  height: 300px;
+  text-align: center;
+  background-color: #fff;
+  padding-top:130px;
   border-radius: 10px;
-  width: 100%;
+  border:1px solid #222;
+  transition:0.3s;
 }
-.login-form > input[type=email]:hover,
-.login-form > input[type=password]:hover,
-.login-form > input[type=email]:focus,
-.login-form > input[type=password]:focus{
+.form-style{
+
+}
+.form-style > input[type=email],
+.form-style > input[type=password],
+.form-style > input[type=text]{
+  display:block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 70%;
+  padding:10px;
+  margin:auto;
+  margin-bottom: 20px;
+  display:block;
+  transition:0.3s;
+}
+.form-style > input[type=email]:hover,
+.form-style > input[type=password]:hover,
+.form-style > input[type=email]:focus,
+.form-style > input[type=password]:focus,
+.form-style > input[type=text]:focus,
+.form-style > input[type=text]:hover{
   border:1px solid #1db1f0;
   box-shadow: 0 0 5px #0088cc;
+  outline: none;
+}
+.form-style > input[type=email]:focus::placeholder,
+.form-style > input[type=password]:focus::placeholder,
+.form-style > input[type=text]:focus::placeholder{
+  opacity: 0;
 }
 
-.login-form > button{
+
+.form-style > button{
   cursor:pointer;
+  border:none;
+  text-transform: uppercase;
+  width: 80px;
+  padding:10px;
+  background-color: dodgerblue;
+  border-radius: 10px;
 }
+
 .signup{
-  visibility: hidden;
+  width: 400px;
+  height: 300px;
+  text-align: center;
+  background-color: #fff;
+  padding-top:130px;
+  border-radius: 10px;
+  border:1px solid #222;
+  transition:0.3s;
+}
+
+.form-style > input[type=button],
+.form-style > input[type=submit]{
+  cursor:pointer;
+  border:none;
+  text-transform: uppercase;
+  width: 80px;
+  padding:10px;
+  background-color: dodgerblue;
+  border-radius: 10px;
+  text-align: center;
 }

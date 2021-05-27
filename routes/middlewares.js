@@ -1,28 +1,34 @@
+const { User } = require("../models/User");
 
-const {User} = require('../models/User');
-
-module.exports.isLoggedin = (req,res,next)=>{
-  if(req.cookies.isAuth === 'true'){
-    res.render('main');
-  }else{
+exports.isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) {
     next();
+  } else {
+    return res.status(403).redirect("/");
   }
-}
-// 
-module.exports.auth = (req,res,next)=>{
-  const tk = req.cookies.auth;
+};
 
-  User.findOne(tk, (err,user)=>{
-    if(err) next(err);
-    if(!user){
-      return res.json({
-        isAuth:false,
-        error:true,
-      });
-    }else{
-      req.token = tk;
-      req.user = user;
-      next();
+exports.isNotLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next();
+  } else {
+    const message = encodeURIComponent("로그인한 상태입니다.");
+    res.redirect(`/main`);
+  }
+};
+exports.checkContent = (req, res, next) => {
+  if (!req.body.email || req.body.email >= 60 || !req.body.password) {
+    return res.redirect("/");
+  }
+  next();
+};
+exports.makeUser = (req, res, next) => {
+  const newUser = new User(req.body);
+  newUser.save((err, result) => {
+    if (err) {
+      return res.render("index", { message: "unexpected Error...", err });
     }
+    console.log("DB Communication Success");
+    next();
   });
-}
+};
