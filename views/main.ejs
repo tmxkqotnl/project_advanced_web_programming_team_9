@@ -3,17 +3,23 @@
 <head>
     <title>KNUmap</title>
     <link rel="stylesheet" href="/stylesheets/style.css"></link>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vm7h6uk881"></script><!--네이버 api-->
+    <!--네이버 api-->
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=vm7h6uk881"></script>
+
+    <!-- local Data Script -->
     <script type="text/javascript" src="/data/data.js"></script>
     <script type="text/javascript" src="/data/covid19data.js"></script>
     <script type="text/javascript" src="/data/dust10data.js"></script>
     <script type="text/javascript" src="/data/dust25data.js"></script>
-    
-    
 
+    <!-- Jqeury && Axios Script -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
     crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- main.js -->
+    <script src="../public/js/main.js"></script>
    
 </head>
 <body>
@@ -23,14 +29,27 @@
         <p><b>Date</b></p>
         <p id="time1"></p>
         <p id="time2"></p>
+        <!-- 임시 링크 -->
+        <a href = "/login">로그인 페이지</a>
+        <a href = "/logout">로그아웃</a>
     </div>
     <div id="map"></div>
     <div id="pano"></div>
     <div id="current">현 위치</div>
   <script>
-var mapOptions = {
-    center: new naver.maps.LatLng(35.88881288743205, 128.61029197352346),//경북대학교 gps
-    zoom: 8
+    let user_location; // 사용자 위치 정보
+    let user_age; // 사용자 나이 정보
+
+    // 사용자 정보 가져오기
+    axios.get('/user/info').then(res=>{
+      user_location = res.data.address;
+      user_age = res.data.age;
+      console.log("확인용 : "+res.data.address + ""+res.data.age);
+    });
+
+    var mapOptions = {
+  center: new naver.maps.LatLng(35.88881288743205, 128.61029197352346),//경북대학교 gps
+  zoom: 8
 };
 var map = new naver.maps.Map('map', mapOptions);//맵 생성
 var markerList =[];//마커들
@@ -38,7 +57,7 @@ var infowindowList =[];// 마커 클릭시 인포메이션
 
 for(var i in data)
 {
-    var num = parseInt(i);
+  var num = parseInt(i);
 var target =data[i];
 var dust10data=dust10[num];
 var dust25data=dust25[num];
@@ -46,19 +65,19 @@ num=num+1;
 var covid19data=covid19[num];
 
 
-   var latlng =new naver.maps.LatLng(target.lat, target.lng);
-   content= "<div class='marker'></div>"
+ var latlng =new naver.maps.LatLng(target.lat, target.lng);
+ content= "<div class='marker'></div>"
 
-   marker = new naver.maps.Marker({
-       map:map,
-       position: latlng,
-       icon:{
-           content: content,
-           anchor : new naver.maps.Point(20,20)
-       },
-   });
-   //infowindow 내용
-    var content =`<div class='infowindow_wrap'>
+ marker = new naver.maps.Marker({
+     map:map,
+     position: latlng,
+     icon:{
+         content: content,
+         anchor : new naver.maps.Point(20,20)
+     },
+ });
+ //infowindow 내용
+  var content =`<div class='infowindow_wrap'>
 <div class ='infowindow_location'>${target.location}</div>
 <div class ='infowindow_incDec'>확진자수</div>
 <div class ='infowindow_incDecdata'>${covid19data}</div>
@@ -68,18 +87,18 @@ var covid19data=covid19[num];
 <div class ='infowindow_dustpm25data'>${dust25data} ppm</div>
 </div>`
 
-    //infowindow 디자인
-    var infowindow = new naver.maps.InfoWindow({
-        content:content,
-        backgroundColor: "#00ff0000",
-        borderColor: "#00ff0000",
-        anchorSize: new naver.maps.Size(0,0)
-    })
-    //마커와 인포메이션 매칭
-    markerList.push(marker);
-    infowindowList.push(infowindow);
+  //infowindow 디자인
+  var infowindow = new naver.maps.InfoWindow({
+      content:content,
+      backgroundColor: "#00ff0000",
+      borderColor: "#00ff0000",
+      anchorSize: new naver.maps.Size(0,0)
+  })
+  //마커와 인포메이션 매칭
+  markerList.push(marker);
+  infowindowList.push(infowindow);
 }
-    
+  
 //클릭이벤트 추가
 for(var i =0, ii=markerList.length; i<ii; i++){
 naver.maps.Event.addListener(map,"click",ClickMap(i));
@@ -88,24 +107,24 @@ naver.maps.Event.addListener(markerList[i], "click", getClickHandler(i));
 //맵 클릭시 info 닫음
 function ClickMap(i){
 return function(){
-    var infowindow =infowindowList[i];
-    infowindow.close();
+  var infowindow =infowindowList[i];
+  infowindow.close();
 }
 }
 //마커 클릭시 해당하는 info 열기
 function getClickHandler(i){
 return function(){
-    var marker =markerList[i];
-    var infowindow= infowindowList[i];
-    if(infowindow.getMap())//열려있을떄
-    {
-        infowindow.close();
-    }
-    else//닫혀있을떄
-    {
-        latlng=marker.position;
-        infowindow.open(map,marker); 
-    }
+  var marker =markerList[i];
+  var infowindow= infowindowList[i];
+  if(infowindow.getMap())//열려있을떄
+  {
+      infowindow.close();
+  }
+  else//닫혀있을떄
+  {
+      latlng=marker.position;
+      infowindow.open(map,marker); 
+  }
 }
 }
 //시간
@@ -121,33 +140,33 @@ timer();
 //현재 위치 확인
 var currentuse= true; // 현재위치 마커 1개만 생성
 $("#current").click(() => {
-    if("geolocation" in navigator)
-    {
-        navigator.geolocation.getCurrentPosition(function (position){
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            const latlng = new naver.maps.LatLng(lat,lng);
-            if(currentuse){
+  if("geolocation" in navigator)
+  {
+      navigator.geolocation.getCurrentPosition(function (position){
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          const latlng = new naver.maps.LatLng(lat,lng);
+          if(currentuse){
 
-          
-            marker= new naver.maps.Marker(
-                {
-                    map: map,
-                    position: latlng,
-                    icon: {
-                        content: "<div class='currentpostion'></div>",
-                    }
-                }
-            );
-        }
-        currentuse=false;
-            map.setZoom(17,false);
-            map.panTo(latlng);
-        });
-    }
-    else{
-        alert("위치정보 사용 불가");
-    } 
+        
+          marker= new naver.maps.Marker(
+              {
+                  map: map,
+                  position: latlng,
+                  icon: {
+                      content: "<div class='currentpostion'></div>",
+                  }
+              }
+          );
+      }
+      currentuse=false;
+          map.setZoom(17,false);
+          map.panTo(latlng);
+      });
+  }
+  else{
+      alert("위치정보 사용 불가");
+  } 
 });
 
   </script>

@@ -11,6 +11,7 @@ const passportindex = require('./passport');
 
 const { MONGO_URI } = require("./config/Keys");
 const indexRouter = require("./routes/index");
+const userRouter = require("./routes/user");
 
 const app = express();
 dotenv.config();
@@ -41,8 +42,8 @@ const server = async() => {
     app.use(cookieParser()); // set cookie parser
     app.use(express.static(path.join(__dirname, "public"))); // set dir of static files
     app.use(session({ // set session
-      resave: false,
-      saveUninitialized: false,
+      resave: true,
+      saveUninitialized: true,
       secret: process.env.COOKIE_SECRET,
       cookie: {
         httpOnly: true,
@@ -53,6 +54,7 @@ const server = async() => {
     app.use(passport.session());
 
     app.use("/", indexRouter);
+    app.use("/user", userRouter);
 
     // 404 errorCode handler
     app.use((req, res, next) => {
@@ -75,7 +77,7 @@ const server = async() => {
       console.log("Listening on port " + app.get("port"));
     });
   } catch (err) {
-    console.log("Databse Connection Error");
+    console.log("ERROR!!!");
     console.error(err);
   }
 };

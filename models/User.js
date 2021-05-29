@@ -20,12 +20,11 @@ const userSchema = mongoose.Schema({
     type:Number,
     maxlength:3
   },
-  token: {
-    type: String,
-  },
-  tokenExp: {
-    type: Number,
-  },
+  address:{
+    require:true,
+    type:String,
+    maxlength:4,
+  }
 });
 
 // hashing this password
@@ -46,43 +45,7 @@ userSchema.pre('save',function(next){
   }
 });
 
-// 문서 커스텀 메서드
-userSchema.methods.comparePassword = function(plain,cb){
-  bcrypt.compare(plain, this.password,(err,isMatch)=>{
-    if(err) return cb(err);
-    cb(null,isMatch);
-  });
-}
-userSchema.methods.generateToken = function(cb){
-  const user = this;
 
-  // objectid는 인스턴스다.
-  // 문자열로 변환
-  const token = jwt.sign(user._id.toHexString(), process.env.JWT_SECRET);
-  user.token = token;
-  user.save().then(doc=>{
-    cb(null,doc);
-  }
-  ).catch(err=>{
-    console.log(err);
-    cb(err);
-  });
-}
-// 모델 스키마 함수
-userSchema.statics.findByToken = function(tk,cb){
-  const user = this;
-
-  // 복호화
-  jwt.verify(tk,process.env.JWT_SECRET,(err,decoded)=>{
-    if(err) cb(err);
-
-    user.findOne({_id:decoded, token:tk})
-    .then(doc=>cb(null,doc))
-    .catch(err=>{
-      return cb(err);
-    });
-  });
-}
 
 // 몽구스 모델 스키마에 등록
 const User = mongoose.model('User',userSchema);
