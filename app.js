@@ -12,8 +12,8 @@ const passportindex = require('./passport');
 const { MONGO_URI } = require("./config/Keys");
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
-const covid19load =require("./public/data/covid19")
-const dustload =require("./public/data/dust")
+//const covid19load =require("./public/data/covid19")
+//const dustload =require("./public/data/dust")
 const app = express();
 dotenv.config();
 passportindex();
