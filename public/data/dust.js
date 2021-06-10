@@ -65,9 +65,14 @@ for (var i in location) {
           dust10 = $(this).find("pm10Value").text();
           dust25 = $(this).find("pm25Value").text();
         });
-
+        if(dust10=="-")
+        dust10=0;//값이 제대로 안들어옴
+        if(dust25=="-")
+        dust25=0;//값이 제대로 안들어옴
+        setTimeout(function () {
         fs.appendFileSync("public/data/dust10data.js", `${dust10},\n`);
         fs.appendFileSync("public/data/dust25data.js", `${dust25},\n`);
+      }, 200);
         // console.log(dust10);
       }
     }
