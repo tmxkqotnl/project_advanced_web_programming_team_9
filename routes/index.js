@@ -1,7 +1,14 @@
+const { next } = require("cheerio/lib/api/traversing");
 const express = require("express");
 const router = express.Router();
 const passport = require('passport');
 const { isLoggedIn,isNotLoggedIn,checkContentLogin,checkContentRegister,makeUser } = require("./middlewares");
+
+global.loggedIn =null;
+router.use("*",(req,res,next) => {
+  loggedIn = req.session.passport;
+  next()
+});
 
 router.get("/", (req, res) => {
   res.render("main");
@@ -24,7 +31,7 @@ router.post("/login", isNotLoggedIn, checkContentLogin, (req, res, next) => {
     }
 
     return req.login(user, (loginError) => {
-      console.error(loginError);
+      // console.error(loginError);
       if (loginError) {
         return next(loginError);
       }
