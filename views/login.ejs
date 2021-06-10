@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <title>COVID19 MAP</title>
+    <link rel="stylesheet" href="/stylesheets/style.css"></link>
     <link rel="stylesheet" href="/stylesheets/style_index.css" />
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src ="js/index.js"></script>
   </head>
   <body>
+
+    <div id="banner">
+      <a href="/"><img src="/images/knu_logo.png" alt="경북대학교"></a>
+    </div>
+
     <div class="container">
       <div class="login">
         <div class = "error-message">
@@ -15,12 +21,21 @@
             <%= message %>
             <% }%>
       </div>
+      <div class="login_left">
+        <p style="margin-left : 10px;">
+          <img src="https://my.knu.ac.kr/stpo/images/login/login_img02.jpg">
+        </p>
+      </div>
+      <div class="login_right">
+        <h1>LOGIN</h1>
         <form action="login" class="form-style" method="POST">
           <input type="email" name="email" id="email" placeholder="Email"/>
           <input type="password" name="password" id="password" placeholder="password" />
           <input type="submit" class="btn-send" value="로그인"/>
+          <div class="login_line"></div>
           <input type = "button" class="btn-signup" value = "회원가입">
         </form>
+      </div>
       </div>
       <div class="signup unvisible">
         <div class = "error-message">
@@ -28,10 +43,27 @@
             <%= message %>
             <% }%>
       </div>
+      <h1>SIGN UP</h1>
         <form action="register" class="form-style" method="POST">
+          <div class="textAboveInput">
+          <span class="required-asterisk">*</span>
+          Email Address
+          </div>
           <input type="email" name="email" id="email" placeholder="Email" />
+          <div class="textAboveInput">
+            <span class="required-asterisk">　*</span>
+            Create Password
+            </div>
           <input type="password" name="password" id="password" placeholder="password" />
+          <div class="textAboveInput">
+            <span class="required-asterisk">*</span>
+            Age          　　　　　
+            </div>
           <input type="text" name="age" id="age" placeholder="Age" />
+          <div class="textAboveInput" style = "margin-left : 7.3px;">
+            <span class="required-asterisk">　*</span>
+            Region       　　　　　
+            </div>
           <select name="address" id = "address">
             <option value="제주" selected = "selected">제주</option>
             <option value="경남">경남</option>
