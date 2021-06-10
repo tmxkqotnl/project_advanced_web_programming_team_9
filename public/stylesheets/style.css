@@ -11,8 +11,8 @@ html{
 
 }
 #banner {
-  height:5%;
-  background-color: black;
+  height: 100px;
+  background-image: url(../images/main_back.png);
   color: white;
   font-weight: bolder;
   font-size:larger;
@@ -37,33 +37,55 @@ html{
   padding:0px 5px;
   border: 1px solid black;
   border-radius: 15px;
-  text-align:center;
+  text-align:left;
+  width: 300px;
+  height: auto;
 }
 #current
 {
   position: absolute;
   top: 92%;
   left:1%;
-  z-index:100;
+  background-repeat: no-repeat;
+  height: 30px;
+  width: 30px;
+  padding: 10px;
   background-color: white;
-  padding:5px;
+  background-image: url(../images/current_position_icon.jpg);
   border: 1px solid black;
-  border-radius: 15px;
-  text-align:center;
+  border-radius: 50px;
   cursor: pointer;
   font-weight: bolder;
 }
-.marker
+.markerhigh
+{
+  width:70px;
+  height:70px;
+  border-radius: 50%;
+  opacity:0.7;
+  background: red;
+}
+.markermid
+{
+  width:55px;
+  height:55px;
+  border-radius: 50%;
+  opacity:0.7;
+  background: yellow;
+}
+.markerlow
 {
   width:40px;
   height:40px;
-  opacity:0.5;
-  background: black;
+  border-radius: 50%;
+  opacity:0.7;
+  background: yellowgreen;
 }
 .infowindow_wrap
 {
   background:white;
   padding: 10px;
+  width : auto;
 }
 
 .currentpostion
@@ -122,4 +144,39 @@ html{
   width:250px;
   height:300px;
   
+}
+
+.textForWhiteBar{
+  font-family: "Graphik SemiBold","Arial",Sans-Serif;
+	padding: 0 0 .63em 0;
+	font-size: 0.9rem;
+	color: #0a0a0a;
+	text-decoration: none;
+	text-transform: none;
+	line-height: 1em;
+	display: inline-block;
+	width: 100%;
+	font-weight: 700;
+  margin: 5px;
+}
+
+.infoBarLine{
+  width: 100%;
+  border: 0.1px solid rgb(58, 58, 58);
+  margin-top: 2px;
+}
+
+#location
+{
+  position: absolute;
+  top:8%;
+  right:1%;
+  z-index: 100;
+  background-color: white;
+  padding:0px 5px;
+  border: 1px solid black;
+  border-radius: 15px;
+  text-align:left;
+  width: auto;
+  height: auto;
 }

@@ -33,8 +33,8 @@ body{
  /* @@@@@@@@@@@@@@ form css @@@@@@@@@@@@ */
 
 .login{
-  width: 400px;
-  height: 300px;
+  width: 1095px;
+  height: 552px;
   text-align: center;
   background-color: #fff;
   padding-top:130px;
@@ -42,6 +42,24 @@ body{
   border:1px solid #222;
   transition:0.3s;
 }
+.login_left{
+  float:left;
+  width: 547px;
+  height: 497px;
+}
+.login_right{
+  float: right;
+  width: 546px;
+  height: 550px;
+}
+.login_line{
+  width: 80%;
+  margin-left: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 0.2px solid rgb(179, 179, 179);
+}
+
 .form-style{
 
 }
@@ -79,18 +97,18 @@ body{
   cursor:pointer;
   border:none;
   text-transform: uppercase;
-  width: 80px;
+  width: 300px;
   padding:10px;
   background-color: dodgerblue;
   border-radius: 10px;
 }
 
 .signup{
-  width: 400px;
-  height: 300px;
+  width: 500px;
+  height: 600px;
   text-align: center;
   background-color: #fff;
-  padding-top:130px;
+  padding-top:100px;
   border-radius: 10px;
   border:1px solid #222;
   transition:0.3s;
@@ -101,14 +119,37 @@ body{
   cursor:pointer;
   border:none;
   text-transform: uppercase;
-  width: 80px;
+  width: 400px;
   padding:10px;
+  margin: 10px;
   background-color: dodgerblue;
+  color: white;
   border-radius: 10px;
   text-align: center;
 }
 
 select[name="address"]{
   display:block;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 74.5%;
+  padding:10px;
   margin:auto;
+  margin-bottom: 20px;
+  display:block;
+  transition:0.3s;
+}
+
+.textAboveInput{
+  margin-right: 250px;
+  font-family: "Graphik SemiBold","Arial",Sans-Serif;
+	padding: 0 0 .63em 0;
+	font-size: 0.9rem;
+	color: #4a4a4a;
+	text-decoration: none;
+	text-transform: none;
+	line-height: 1em;
+	display: inline-block;
+	max-width: 100%;
+	font-weight: 700;
 }
