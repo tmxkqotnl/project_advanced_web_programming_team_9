@@ -6,9 +6,9 @@ const fs = require("fs");
 
 let today = new Date();
 let year = today.getFullYear();
-let month  = ("0" + (1 + today.getMonth())).slice(-2);
-let day = ("0" + today.getDate()).slice(-2);
-let date = `${year}${month}${day}`;
+let month = today.getMonth() + 1;
+let day = today.getDate();
+let date = `${year}0${month}${day}`;
 
 console.log(`${date}`);
 const url =
