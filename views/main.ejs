@@ -20,13 +20,12 @@
 
     <!-- main.js -->
     <script src="../public/js/main.js"></script>
-    <script src="/data/covid19.js"></script>
-
    
 </head>
 <body>
 
-    <div id="banner">COVID19,DUST MAP
+    <div id="banner">
+      <a href="/"><img src="/images/knu_logo.png" alt="경북대학교"></a>
       <ul class="navbar">
         <% if(!loggedIn) { %>
         <li class="nav-item">
@@ -41,13 +40,16 @@
       </ul>
     </div>
     <div id="box">
-        <p><b>Date</b></p>
+      <div class=textForWhiteBar>
+          <div id="total"></div>
+      </div>
+      <div class=textForWhiteBar>
         <p id="time1"></p>
-        <p id="time2"></p>
+      </div>
     </div>
     <% if(loggedIn) { %>
       <div id="location">
-        <p id="locname"></p>
+        <p id="locname" style = "font-weight: bold;"></p>
         <p id="locincdec">확진자수:</p>
         <p id="locpm10">pm10:</p>
         <p id="locpm25">pm25:</p>
@@ -55,15 +57,17 @@
       </div>
       <% } %>
     <div id="map"></div>
-    <div id="current">현 위치</div>
+    <div id="pano"></div>
+    <div id="current"></div>
   <script>
     let user_location; // 사용자 위치 정보
     let user_age; // 사용자 나이 정보
+
     // 사용자 정보 가져오기
     axios.get('/user/info').then(res=>{
       user_location = res.data.address;
       user_age = res.data.age;
-
+     
       for(var i in data)
     {
   var num = parseInt(i);
@@ -105,8 +109,8 @@ if(user_location==target.location)
     }
 }
 }
-
     });
+
     var mapOptions = {
   center: new naver.maps.LatLng(35.88881288743205, 128.61029197352346),//경북대학교 gps
   zoom: 8
@@ -114,6 +118,7 @@ if(user_location==target.location)
 var map = new naver.maps.Map('map', mapOptions);//맵 생성
 var markerList =[];//마커들
 var infowindowList =[];// 마커 클릭시 인포메이션
+var totalCase = 0; //총 확진자 수
 
 for(var i in data)
 {
@@ -124,8 +129,23 @@ var dust25data=dust25[num];
 num=num+1;
 var covid19data=covid19[num];
 
+totalCase = covid19[18];
+
  var latlng =new naver.maps.LatLng(target.lat, target.lng);
+
+ if(covid19data > 100){
+ content= "<div class='markerhigh'></div>"
+ }
+
+ else if(covid19data >= 30){
  content= "<div class='markermid'></div>"
+ }
+
+ else if(covid19data >= 0){
+ content= "<div class='markerlow'></div>"
+ }
+
+ console.log(covid19data);
 
  marker = new naver.maps.Marker({
      map:map,
@@ -137,13 +157,11 @@ var covid19data=covid19[num];
  });
  //infowindow 내용
   var content =`<div class='infowindow_wrap'>
-<div class ='infowindow_location'>${target.location}</div>
-<div class ='infowindow_incDec'>확진자수</div>
-<div class ='infowindow_incDecdata'>${covid19data}</div>
-<div class ='infowindow_dustpm10'>pm 10</div>
-<div class ='infowindow_dustpm10data'>${dust10data} ppm</div>
-<div class ='infowindow_dustpm25'>pm 2.5</div>
-<div class ='infowindow_dustpm25data'>${dust25data} ppm</div>
+<div class ='infowindow_location' style = "font-weight: bold;">${target.location}</div>
+<div class ='infowindow_incDec'>확진자수 : ${covid19data}</div>
+<div class ='infoBarLine'></div>
+<div class ='infowindow_dustpm10'>pm 10 : ${dust10data} ppm</div>
+<div class ='infowindow_dustpm25'>pm 2.5 : ${dust25data} ppm</div>
 </div>`
 
   //infowindow 디자인
@@ -186,12 +204,21 @@ return function(){
   }
 }
 }
+
+//총 확진자 수
+function getTotalCase()
+{
+  document.getElementById("total").innerHTML= "총 확진자 수 : " + totalCase;
+}
+getTotalCase();
+
 //시간
 function timer()
 {
 var today=new Date();
-document.getElementById("time1").innerHTML=today.toLocaleDateString(); 
-document.getElementById("time2").innerHTML=today.toLocaleTimeString();
+var time1 = today.toLocaleDateString();
+var time2 = today.toLocaleTimeString();
+document.getElementById("time1").innerHTML= "현재시간 : " + time1 + " " + time2;
 setTimeout('timer()',1000);
 }
 timer();
